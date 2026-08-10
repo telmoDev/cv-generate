@@ -6,13 +6,26 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class DashboardProfileTest extends TestCase
+class PerfilProfileTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_guests_cannot_update_profile_from_dashboard(): void
+    public function test_guests_are_redirected_from_the_perfil_page(): void
     {
-        $this->patch(route('dashboard.update'), [
+        $this->get(route('perfil'))->assertRedirect(route('login'));
+    }
+
+    public function test_authenticated_users_can_visit_the_perfil_page(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this->get(route('perfil'))->assertOk();
+    }
+
+    public function test_guests_cannot_update_profile(): void
+    {
+        $this->patch(route('perfil.update'), [
             'first_name' => 'Telmo',
         ])->assertRedirect(route('login'));
     }
@@ -22,7 +35,7 @@ class DashboardProfileTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $this->patch(route('dashboard.update'), [
+        $this->patch(route('perfil.update'), [
             'first_name' => 'Telmo',
             'last_name' => 'Ramirez',
             'phone' => '555-1234',
@@ -49,7 +62,7 @@ class DashboardProfileTest extends TestCase
         ]);
         $this->actingAs($user);
 
-        $this->patch(route('dashboard.update'), [
+        $this->patch(route('perfil.update'), [
             'first_name' => null,
             'phone' => null,
         ])->assertRedirect();

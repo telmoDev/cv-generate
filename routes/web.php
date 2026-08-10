@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,7 +10,9 @@ Route::inertia('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::patch('dashboard', [DashboardController::class, 'update'])->name('dashboard.update');
+
+    Route::get('perfil', [PerfilController::class, 'index'])->name('perfil');
+    Route::patch('perfil', [PerfilController::class, 'update'])->name('perfil.update');
 
     Route::post('academics', [AcademicController::class, 'store'])->name('academics.store');
     Route::patch('academics/{academic}', [AcademicController::class, 'update'])->name('academics.update');
