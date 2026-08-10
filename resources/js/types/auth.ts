@@ -4,6 +4,12 @@ export type User = {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+    first_name: string | null;
+    last_name: string | null;
+    phone: string | null;
+    country: string | null;
+    city: string | null;
+    address: string | null;
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
