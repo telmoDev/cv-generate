@@ -58,4 +58,14 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Academic::class);
     }
+
+    /**
+     * Get the profession records for the user.
+     *
+     * @return HasMany<Profession, $this>
+     */
+    public function professions(): HasMany
+    {
+        return $this->hasMany(Profession::class);
+    }
 }
