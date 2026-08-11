@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GenerarCvController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfessionController;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +12,8 @@ Route::inertia('/', 'welcome')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::inertia('generar-cv', 'generar-cv')->name('generar-cv');
+    Route::get('generar-cv', [GenerarCvController::class, 'index'])->name('generar-cv');
+    Route::post('generar-cv', [GenerarCvController::class, 'analyze'])->name('generar-cv.analyze');
 
     Route::get('perfil', [PerfilController::class, 'index'])->name('perfil');
     Route::patch('perfil', [PerfilController::class, 'update'])->name('perfil.update');

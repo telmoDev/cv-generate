@@ -8,9 +8,9 @@ Laravel 13 (PHP 8.3) + Inertia 3 + React 19 + TypeScript + Tailwind 4 + Vite 8. 
 
 - `dashboard` (`DashboardController`).
 - `perfil` (`PerfilController`): personal info plus academic (`AcademicController`) and professional experience (`ProfessionController`) CRUD.
-- `generar-cv`: static Inertia page with a textarea to paste a job offer (no backend yet).
+- `generar-cv` (`GenerarCvController`): pega una oferta y la envía a `POST /generar-cv` para analizarla contra el perfil del usuario. El agente `app/Ai/Agents/CvAnalyzer.php` (provider Gemini, `#[Provider(Lab::Gemini)]`) devuelve structured output (`HasStructuredOutput` → `schema()`) con los datos para un CV ATS + un `email_message` para el reclutador; el resultado se expone en la página vía flash. Los tests fakean el agente con `CvAnalyzer::fake([...])` / `assertPrompted`.
 
-`laravel/ai` (^0.10.3) is installed and will power CV generation; `composer show laravel/ai` for its API.
+`laravel/ai` (^0.10.3) is installed and powers CV generation via agents in `app/Ai/Agents`; `composer show laravel/ai` for its API.
 
 ## Commands
 
