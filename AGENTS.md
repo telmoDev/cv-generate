@@ -2,6 +2,16 @@
 
 Laravel 13 (PHP 8.3) + Inertia 3 + React 19 + TypeScript + Tailwind 4 + Vite 8. Auth via Fortify. Default DB is SQLite (`.env`), in-memory SQLite for tests.
 
+## App overview
+
+`cv-generate` builds tailored CVs from a user's profile. All app pages are behind the `auth` + `verified` middleware group in `routes/web.php`:
+
+- `dashboard` (`DashboardController`).
+- `perfil` (`PerfilController`): personal info plus academic (`AcademicController`) and professional experience (`ProfessionController`) CRUD.
+- `generar-cv`: static Inertia page with a textarea to paste a job offer (no backend yet).
+
+`laravel/ai` (^0.10.3) is installed and will power CV generation; `composer show laravel/ai` for its API.
+
 ## Commands
 
 - `composer dev` — starts `php artisan dev` (Laravel + Vite hot reload together). Frontend-only: `npm run dev`.
@@ -20,11 +30,9 @@ php artisan wayfinder:generate --with-form --no-interaction
 
 After adding or changing a PHP route you MUST regenerate, or `npm run types:check` / tsc will fail on missing modules. Import generated helpers from `routes/...` and `actions/...` (eslint ignores these dirs). Vite config sets `wayfinder({ formVariants: true })`, matching `--with-form`.
 
-## Chisel scaffolding not yet finalized
+## Chisel scaffolding applied
 
-This repo still contains one-time starter-kit scaffolding: `chisel.php`, `chisel-paths.php`, and `app/Console/Commands/InstallFeaturesCommand.php`. Auth features are delimited by `/* @chisel-* */` / `/* @end-chisel-* */` markers across `config/fortify.php`, `app/Providers/FortifyServiceProvider.php`, `routes/settings.php`, `app/Models/User.php`, and the React pages/components. Feature-specific tests self-skip via `skipUnlessFortifyHas()` in `tests/TestCase.php`.
-
-To add/remove an auth feature (registration, email verification, 2FA, passkeys, password confirmation), re-run the interactive `php artisan chisel` / `install:features` rather than hand-editing. If you edit these sections manually, delete whole marked blocks and keep markers balanced. Chisel's apply step (which deletes `chisel.php` etc. and runs pint/wayfinder/lint) has not run yet.
+The one-time starter-kit scaffolding has been removed by Chisel's apply step: `chisel.php`, `chisel-paths.php`, and `app/Console/Commands/InstallFeaturesCommand.php` no longer exist, and there is no `php artisan chisel` / `install:features` command. Enable/disable auth features (registration, email verification, 2FA, passkeys, password confirmation) by editing `config/fortify.php` directly. Feature-dependent tests still self-skip via `skipUnlessFortifyHas()` in `tests/TestCase.php`.
 
 ## Frontend conventions
 

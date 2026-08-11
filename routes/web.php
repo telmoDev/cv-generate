@@ -11,6 +11,8 @@ Route::inertia('/', 'welcome')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::inertia('generar-cv', 'generar-cv')->name('generar-cv');
+
     Route::get('perfil', [PerfilController::class, 'index'])->name('perfil');
     Route::patch('perfil', [PerfilController::class, 'update'])->name('perfil.update');
 
